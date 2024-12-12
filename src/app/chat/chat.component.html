@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="chat.component.css">
+  <title>Sign In App</title>
+</head>
+<body>
+  <div class="chat-container">
+    <!-- Messages -->
+    <div class="messages" #messagesContainer>
+
+      <div *ngFor="let message of messages"
+           [ngClass]="{ 'user-message-container': message.user, 'bot-message-container': !message.user }">
+        <!-- Conditional image rendering -->
+        <!-- Message text -->
+        <div [ngClass]="{ 'user-message-text': message.user, 'bot-message-text': !message.user }">
+          {{ message.text }}
+        </div>
+      </div>
+
+      <!-- Loading message -->
+      <div class="bot-message-container">
+        <div class="message bot-message-text" *ngIf="isLoading">
+          Loading...
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div class="bot-message-container">
+        <div class="message bot-message-text" *ngIf="errorOccurred">
+          {{ customErrorMessage }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Input form -->
+    <div class="input-container gradient-border">
+      <textarea class="gradient-border" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" (input)="autoGrow($event)" placeholder="Type a message..."></textarea>
+      <button (click)="sendMessage()">Enter<i class="bx bx-up-arrow-alt"></i></button>
+    </div>
+
+  </div>
+ </body>
+</html>
